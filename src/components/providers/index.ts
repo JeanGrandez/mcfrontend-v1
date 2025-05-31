@@ -1,5 +1,4 @@
 // src/components/providers/index.ts - Exportaciones de providers (Programador A)
-
 export {
     AuthProvider,
     useAuthContext,
@@ -22,3 +21,8 @@ export {
     NetworkErrorToast,
     default as ToastProviderDefault
 } from './toast-provider';
+
+// src/components/providers/index.ts
+export { ToastProvider } from './toast-provider';
+export { SocketProvider } from './socket-provider';
+export { AuthProvider } from './auth-provider';

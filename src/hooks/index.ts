@@ -1,3 +1,4 @@
+
 // src/hooks/useToast.ts - Hook de notificaciones (Programador A)
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -253,3 +254,12 @@ export function useApiErrorToast() {
 }
 
 export default useToast;
+
+// src/hooks/index.ts
+export { useToast } from './useToast';
+export { useRanking } from './useRanking';
+export { useLocalStorage } from './useLocalStorage';
+export { useAuth } from './useAuth';
+export { useWebSocket } from './useWebSocket';
+export type { RankingUser } from './useRanking';
+
