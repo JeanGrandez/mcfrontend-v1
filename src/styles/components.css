@@ -1,0 +1,116 @@
+
+/* Component-specific styles */
+
+/* Trading specific animations */
+@keyframes profit-flash {
+    0%, 100% { background-color: rgba(16, 185, 129, 0.1); }
+    50% { background-color: rgba(16, 185, 129, 0.3); }
+}
+
+@keyframes loss-flash {
+    0%, 100% { background-color: rgba(239, 68, 68, 0.1); }
+    50% { background-color: rgba(239, 68, 68, 0.3); }
+}
+
+.profit-flash {
+    animation: profit-flash 1s ease-in-out;
+}
+
+.loss-flash {
+    animation: loss-flash 1s ease-in-out;
+}
+
+/* Balance card hover effects */
+.balance-card {
+    @apply transition-all duration-300 ease-in-out;
+}
+
+.balance-card:hover {
+    @apply transform scale-105 shadow-lg;
+}
+
+/* Ranking position styles */
+.ranking-position-1 {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+.ranking-position-2 {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    box-shadow: 0 4px 12px rgba(156, 163, 175, 0.4);
+}
+
+.ranking-position-3 {
+    background: linear-gradient(135deg, #fb923c, #ea580c);
+    box-shadow: 0 4px 12px rgba(251, 146, 60, 0.4);
+}
+
+/* Order book styles */
+.order-row-buy {
+    border-left: 3px solid var(--trade-green);
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.05), transparent);
+}
+
+.order-row-sell {
+    border-left: 3px solid var(--trade-red);
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.05), transparent);
+}
+
+.order-row-own {
+    border-left: 3px solid var(--primary);
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* Form enhancements */
+.form-input:focus {
+    @apply ring-2 ring-primary ring-opacity-50 border-primary;
+}
+
+.form-input-error {
+    @apply border-destructive ring-2 ring-destructive ring-opacity-50;
+}
+
+/* Button loading animation */
+.button-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.button-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .trading-table {
+        font-size: 0.875rem;
+    }
+
+    .ranking-card {
+        padding: 0.75rem;
+    }
+
+    .balance-card {
+        padding: 1rem;
+    }
+}
+
+/* Print styles for export */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .trading-table {
+        font-size: 0.75rem;
+    }
+}
