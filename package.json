@@ -1,17 +1,28 @@
 {
-  "name": "mcfrontend",
+  "name": "fintech-trading-simulator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.3"
+    "next": "15.3.3",
+    "react-hook-form": "^7.52.0",
+    "zod": "^3.22.0",
+    "@hookform/resolvers": "^3.3.0",
+    "socket.io-client": "^4.7.5",
+    "axios": "^1.6.0",
+    "lucide-react": "^0.400.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
     "typescript": "^5",
