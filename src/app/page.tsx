@@ -1,103 +1,196 @@
-import Image from "next/image";
+// src/app/page.tsx - Página principal (Programador A)
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+'use client';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { TrendingUp, Users, DollarSign, Target, ArrowRight } from 'lucide-react';
+import { useAuthContext } from '@/components/providers/auth-provider';
+import { cn } from '@/lib/utils';
+
+export default function HomePage() {
+  const { isAuthenticated, isLoading } = useAuthContext();
+  const router = useRouter();
+
+  // Redirect authenticated users to market
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.replace('/market');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  // Show loading while checking auth
+  if (isLoading) {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    );
+  }
+
+  // Show landing page for unauthenticated users
+  return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-background">
+        {/* Header */}
+        <header className="border-b border-border bg-background/80 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xl font-bold text-foreground">
+                <TrendingUp className="w-6 h-6 text-primary" />
+                Trading Simulator
+              </div>
+
+              <div className="flex items-center gap-4">
+                <Link
+                    href="/login"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Iniciar Sesión
+                </Link>
+                <Link
+                    href="/register"
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                  Registrarse
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+              Simulador de{' '}
+              <span className="text-primary">Trading</span>
+            </h1>
+
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Experimenta el trading de divisas en tiempo real con fondos virtuales.
+              Perfecto para eventos de networking fintech.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <Link
+                  href="/register"
+                  className={cn(
+                      "px-8 py-4 bg-primary text-primary-foreground rounded-lg",
+                      "hover:bg-primary/90 transition-colors font-semibold",
+                      "flex items-center justify-center gap-2"
+                  )}
+              >
+                Empezar Ahora
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+
+              <Link
+                  href="/login"
+                  className={cn(
+                      "px-8 py-4 bg-secondary text-secondary-foreground rounded-lg",
+                      "hover:bg-secondary/90 transition-colors font-semibold"
+                  )}
+              >
+                Ya Tengo Cuenta
+              </Link>
+            </div>
+
+            {/* Features Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="bg-card rounded-lg p-8 border">
+                <DollarSign className="w-12 h-12 text-trade-green mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-3">
+                  Fondos Virtuales
+                </h3>
+                <p className="text-muted-foreground">
+                  Comienza con $1,000 USD y S/. 3,500 para practicar sin riesgo.
+                </p>
+              </div>
+
+              <div className="bg-card rounded-lg p-8 border">
+                <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-3">
+                  Tiempo Real
+                </h3>
+                <p className="text-muted-foreground">
+                  Operaciones que se ejecutan en tiempo real con otros participantes.
+                </p>
+              </div>
+
+              <div className="bg-card rounded-lg p-8 border">
+                <Users className="w-12 h-12 text-trade-blue mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-3">
+                  Competencia
+                </h3>
+                <p className="text-muted-foreground">
+                  Compite en el ranking y demuestra tus habilidades de trading.
+                </p>
+              </div>
+            </div>
+
+            {/* How It Works */}
+            <div className="bg-card rounded-lg p-8 border">
+              <h2 className="text-2xl font-bold text-foreground mb-8">
+                ¿Cómo Funciona?
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-primary font-bold">1</span>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Regístrate</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Crea tu cuenta con datos básicos
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-primary font-bold">2</span>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Observa</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Ve el mercado en vivo y las órdenes
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-primary font-bold">3</span>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Opera</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Crea órdenes de compra/venta
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-primary font-bold">4</span>
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Compite</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Sube en el ranking de ganancias
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-border bg-background/80 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center text-muted-foreground">
+              <p>© 2024 Trading Simulator - Evento de Networking Fintech</p>
+              <p className="mt-1 text-sm">
+                Simulador educativo con fondos virtuales
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
   );
 }

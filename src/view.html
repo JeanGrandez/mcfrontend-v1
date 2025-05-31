@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Mercado Cambiario Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = {
+            autoReplaceSvg: 'nest',
+        };
+    </script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+    <style>
+        * {
+            font-family: "Inter", sans-serif;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom colors */
+        .bg-navbar { /* This class is not used by the new sidebar but kept for potential other uses */
+            background-color: #797774;
+        }
+        .bg-account { /* This class is not used by the new account cards but kept for potential other uses */
+            background-color: #6f6d6a;
+        }
+        .bg-primary {
+            background-color: #e53935;
+        }
+        .text-primary {
+            color: #e53935;
+        }
+    </style>
+</head>
+
+<body class="h-full text-base-content">
+<!-- Fixed Header (overlaps sidebar) -->
+<header id="header" class="fixed w-full h-[72px] bg-primary flex items-center justify-between px-6 text-white z-50">
+    <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-dollar-sign text-2xl"></i>
+            <span class="text-xl font-medium">Mercado Cambiario</span>
+        </div>
+        <div>
+            <h1 class="text-xl font-medium">Tus Órdenes</h1>
+            <p class="text-sm opacity-80">Sin atención hoy</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <button class="border border-white px-4 py-2 rounded-lg">CREAR ORDEN</button>
+        <div class="relative">
+            <i class="fa-regular fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-medium">JPG</div>
+            <i class="fa-solid fa-chevron-down text-sm"></i>
+        </div>
+    </div>
+</header>
+
+<div class="flex h-[100vh] pt-[72px]"> <!-- Adjusted padding top to match new header height -->
+    <!-- Sidebar / Navbar -->
+    <nav id="sidebar" class="w-64 bg-[#797774] text-white flex flex-col justify-between">
+        <!-- Top Menu -->
+        <div class="mt-4 space-y-2">
+            <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-700 transition">
+                <i class="fa-solid fa-chart-line w-6"></i>
+                <span class="ml-2">Live Market</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 bg-primary hover:bg-red-600 transition">
+                <i class="fa-solid fa-list-check w-6"></i>
+                <span class="ml-2">Your Orders</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-700 transition">
+                <i class="fa-solid fa-ranking-star w-6"></i>
+                <span class="ml-2">Ranking</span>
+            </a>
+        </div>
+
+        <!-- Bottom: Account Cards -->
+        <div class="p-4 space-y-6">
+            <!-- Dollar Account Card -->
+            <div class="rounded-xl p-4 shadow-sm bg-[#dcdcdb]">
+                <!-- Header Pill -->
+                <div class="inline-block bg-[#dcdcdb] text-[#4A4A4A] text-sm font-medium px-3 py-1 rounded-full mb-3">
+                    Mercado Dollar Account
+                </div>
+                <!-- Balance -->
+                <p class="text-3xl font-bold text-[#6f6d6a]">$ 10,000.00</p>
+            </div>
+
+            <!-- Soles Account Card -->
+            <div class="rounded-xl p-4 shadow-sm bg-[#dcdcdb]">
+                <div class="inline-block bg-[#dcdcdb] text-[#4A4A4A] text-sm font-medium px-3 py-1 rounded-full mb-3">
+                    Mercado Soles Account
+                </div>
+                <p class="text-3xl font-bold text-[#6f6d6a]">S/ 1,000.00</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6 overflow-auto bg-gray-50 relative">
+        <!-- Accounts, Demands, Offers Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Dollar Account Card (Main Content) -->
+            <div class="rounded-xl p-4 shadow-sm bg-[#dcdcdb]">
+                <div class="inline-block bg-[#dcdcdb] text-[#4A4A4A] text-sm font-medium px-3 py-1 rounded-full mb-3">
+                    Mercado Dollar Account
+                </div>
+                <p class="text-3xl font-bold text-[#6f6d6a]">$ 9,600.00</p>
+            </div>
+
+            <!-- Soles Account Card (Main Content) -->
+            <div class="rounded-xl p-4 shadow-sm bg-[#dcdcdb]">
+                <div class="inline-block bg-[#dcdcdb] text-[#4A4A4A] text-sm font-medium px-3 py-1 rounded-full mb-3">
+                    Mercado Soles Account
+                </div>
+                <p class="text-3xl font-bold text-[#6f6d6a]">S/ 2,456.60</p>
+            </div>
+
+            <!-- Demands -->
+            <div class="rounded-xl shadow-sm overflow-hidden">
+                <div class="px-4 py-2 bg-green-100 flex items-center justify-between">
+                    <span class="text-green-700 text-sm font-medium">Demandas</span>
+                    <span class="text-green-700 text-xl font-bold">3.662</span>
+                </div>
+                <div class="p-4 bg-[#eee]">
+                    <table class="w-full text-sm text-gray-700">
+                        <thead>
+                        <tr class="text-left">
+                            <th class="w-1/3">Cantidad</th>
+                            <th class="w-1/3">Tipo Cambio</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-green-600">100</td>
+                            <td>3.662</td>
+                        </tr>
+                        <tr>
+                            <td class="text-green-600">100</td>
+                            <td>3.649</td>
+                        </tr>
+                        <tr>
+                            <td class="text-green-600">100</td>
+                            <td>3.649</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Offers -->
+            <div class="rounded-xl shadow-sm overflow-hidden">
+                <div class="px-4 py-2 bg-orange-100 flex items-center justify-between">
+                    <span class="text-orange-700 text-sm font-medium">Ofertas</span>
+                    <span class="text-orange-700 text-xl font-bold">3.649</span>
+                </div>
+                <div class="p-4 bg-[#eee]">
+                    <table class="w-full text-sm text-gray-700">
+                        <thead>
+                        <tr class="text-left">
+                            <th class="w-1/3">Cantidad</th>
+                            <th class="w-1/3">Tipo Cambio</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-orange-600">100</td>
+                            <td>3.649</td>
+                        </tr>
+                        <tr>
+                            <td class="text-orange-600">100</td>
+                            <td>3.649</td>
+                        </tr>
+                        <tr>
+                            <td class="text-orange-600">200</td>
+                            <td>3.654</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div class="rounded-xl border border-gray-300 overflow-hidden mb-12">
+            <!-- Tabs -->
+            <div class="flex border-b bg-white">
+                <button
+                        class="px-8 py-3 text-white bg-primary font-medium border-b-2 border-primary"
+                >
+                    ACTIVAS
+                </button>
+                <button class="px-8 py-3 text-gray-500 font-medium">COMPLETADAS</button>
+                <button class="px-8 py-3 text-gray-500 font-medium">ELIMINADAS</button>
+            </div>
+
+            <!-- Active Orders List -->
+            <div class="p-4 space-y-6 bg-[#f9f9f9]">
+                <!-- Date Group: 21/05/2025 -->
+                <div>
+                    <div class="inline-block bg-gray-300 text-gray-700 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                        21/05/2025
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Order Row 1 -->
+                        <div class="bg-white rounded-lg p-4 flex items-center justify-between shadow">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-arrow-left text-green-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Compra</div>
+                                    <div class="text-gray-500 text-xs">dólares</div>
+                                    <div class="text-gray-500 text-xs mt-1">Código 01259</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500 text-xs">21/05/2025 01:37 pm</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">$ 210.17</div>
+                                <div class="text-gray-500 text-xs">Monto</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">3.850</div>
+                                <div class="text-gray-500 text-xs">(final 3.853)</div>
+                                <div class="text-gray-500 text-xs">Tipo Cambio</div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                                <button class="text-gray-400">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Order Row 2 -->
+                        <div class="bg-white rounded-lg p-4 flex items-center justify-between shadow">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-arrow-left text-green-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Compra</div>
+                                    <div class="text-gray-500 text-xs">dólares</div>
+                                    <div class="text-gray-500 text-xs mt-1">Código 01261</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500 text-xs">21/05/2025 03:27 pm</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">$ 10.17</div>
+                                <div class="text-gray-500 text-xs">Monto</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">3.661</div>
+                                <div class="text-gray-500 text-xs">(final 3.664)</div>
+                                <div class="text-gray-500 text-xs">Tipo Cambio</div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                                <button class="text-gray-400">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Group: 22/05/2025 -->
+                <div>
+                    <div class="inline-block bg-gray-300 text-gray-700 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                        22/05/2025
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Order Row 3 -->
+                        <div class="bg-white rounded-lg p-4 flex items-center justify-between shadow">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-arrow-left text-green-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Compra</div>
+                                    <div class="text-gray-500 text-xs">dólares</div>
+                                    <div class="text-gray-500 text-xs mt-1">Código 01283</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500 text-xs">22/05/2025 03:51 pm</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">$ 250.00</div>
+                                <div class="text-gray-500 text-xs">Monto</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">3.646</div>
+                                <div class="text-gray-500 text-xs">(final 3.649)</div>
+                                <div class="text-gray-500 text-xs">Tipo Cambio</div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                                <button class="text-gray-400">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Group: 21/05/2025 (repeat) -->
+                <div>
+                    <div class="inline-block bg-gray-300 text-gray-700 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                        21/05/2025
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Order Row 4 -->
+                        <div class="bg-white rounded-lg p-4 flex items-center justify-between shadow">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-arrow-left text-green-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Compra</div>
+                                    <div class="text-gray-500 text-xs">dólares</div>
+                                    <div class="text-gray-500 text-xs mt-1">Código 01262</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500 text-xs">21/05/2025 03:29 pm</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">$ 100.00</div>
+                                <div class="text-gray-500 text-xs">Monto</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">3.654</div>
+                                <div class="text-gray-500 text-xs">(final 3.657)</div>
+                                <div class="text-gray-500 text-xs">Tipo Cambio</div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                                <button class="text-gray-400">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Group: 12/05/2025 -->
+                <div>
+                    <div class="inline-block bg-gray-300 text-gray-700 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                        12/05/2025
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Order Row 5 -->
+                        <div class="bg-white rounded-lg p-4 flex items-center justify-between shadow">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-arrow-right text-orange-500"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Venta</div>
+                                    <div class="text-gray-500 text-xs">dólares</div>
+                                    <div class="text-gray-500 text-xs mt-1">Código 01156</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-gray-500 text-xs">12/05/2025 10:43 pm</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">$ 120.00</div>
+                                <div class="text-gray-500 text-xs">Monto</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-medium">3.552</div>
+                                <div class="text-gray-500 text-xs">(final 3.549)</div>
+                                <div class="text-gray-500 text-xs">Tipo Cambio</div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+                                <button class="text-gray-400">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WhatsApp Floating Button -->
+        <div class="fixed bottom-6 right-6">
+            <a href="#" class="bg-green-500 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition">
+                <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
