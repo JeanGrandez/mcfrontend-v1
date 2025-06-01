@@ -22,6 +22,13 @@ const nextConfig: NextConfig = {
             },
         ];
     },
+    // Silenciar warnings en desarrollo
+    typescript: {
+        ignoreBuildErrors: false,
+    },
+    eslint: {
+        ignoreDuringBuilds: false,
+    },
 };
 
 export default nextConfig;
