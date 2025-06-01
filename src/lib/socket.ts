@@ -1,5 +1,4 @@
-// src/lib/socket.ts - Cliente WebSocket (Programador A)
-
+// src/lib/socket.ts
 import { io, Socket } from 'socket.io-client';
 import { API_CONFIG, WS_EVENTS } from './constants';
 import { TokenManager } from './api';

@@ -1,5 +1,4 @@
-// src/hooks/useWebSocket.ts - Hook de WebSocket (Programador A)
-
+// src/hooks/useWebSocket.ts - Updated with specific market hooks
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { getSocketManager } from '@/lib/socket';
 import { WS_EVENTS } from '@/lib/constants';

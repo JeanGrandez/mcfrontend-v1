@@ -7,4 +7,5 @@ export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 export { Badge } from './badge';
 export { Spinner } from './spinner';
 export { Toast } from './toast';
+export { Drawer } from './drawer';
 export type { ToastProps } from './toast';
