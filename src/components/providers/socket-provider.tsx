@@ -1,5 +1,3 @@
-// src/components/providers/socket-provider.tsx - Proveedor de WebSocket (Programador A)
-
 'use client';
 
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';

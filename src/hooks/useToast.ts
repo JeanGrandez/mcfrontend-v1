@@ -1,8 +1,8 @@
-
-// src/hooks/useToast.ts - Hook de notificaciones (Programador A)
+// src/hooks/useToast.ts
+'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { APP_CONFIG } from '@/lib/constants';
+import { useContext, createContext } from 'react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -28,6 +28,10 @@ interface UseToastReturn {
     error: (message: string, options?: Partial<Toast>) => string;
     warning: (message: string, options?: Partial<Toast>) => string;
     info: (message: string, options?: Partial<Toast>) => string;
+    showSuccess: (title: string, message?: string) => string;
+    showError: (title: string, message?: string) => string;
+    showInfo: (title: string, message?: string) => string;
+    showWarning: (title: string, message?: string) => string;
 }
 
 let toastCounter = 0;
@@ -57,7 +61,7 @@ export function useToast(): UseToastReturn {
     // Add toast
     const addToast = useCallback((toastData: Omit<Toast, 'id'>): string => {
         const id = generateId();
-        const duration = toastData.duration ?? APP_CONFIG.TOAST_DURATION;
+        const duration = toastData.duration ?? 5000; // Default duration
         const dismissible = toastData.dismissible ?? true;
 
         const toast: Toast = {
@@ -123,6 +127,40 @@ export function useToast(): UseToastReturn {
         });
     }, [addToast]);
 
+    // New UI convenience methods
+    const showSuccess = useCallback((title: string, message?: string): string => {
+        return addToast({
+            type: 'success',
+            title,
+            message: message || '',
+        });
+    }, [addToast]);
+
+    const showError = useCallback((title: string, message?: string): string => {
+        return addToast({
+            type: 'error',
+            title,
+            message: message || '',
+            duration: 0,
+        });
+    }, [addToast]);
+
+    const showWarning = useCallback((title: string, message?: string): string => {
+        return addToast({
+            type: 'warning',
+            title,
+            message: message || '',
+        });
+    }, [addToast]);
+
+    const showInfo = useCallback((title: string, message?: string): string => {
+        return addToast({
+            type: 'info',
+            title,
+            message: message || '',
+        });
+    }, [addToast]);
+
     // Cleanup timeouts on unmount
     useEffect(() => {
         return () => {
@@ -140,35 +178,26 @@ export function useToast(): UseToastReturn {
         error,
         warning,
         info,
+        showSuccess,
+        showError,
+        showWarning,
+        showInfo,
     };
 }
 
-// Global toast context and provider setup
-import { createContext, useContext, ReactNode } from 'react';
+// Create context
+const ToastContext = createContext<UseToastReturn | undefined>(undefined);
 
-const ToastContext = createContext<UseToastReturn | null>(null);
-
-export function ToastProvider({ children }: { children: ReactNode }) {
-    const toast = useToast();
-
-    return (
-        <ToastContext.Provider value={toast}>
-            {children}
-            </ToastContext.Provider>
-    );
+interface ToastProviderProps {
+    children: React.ReactNode;
 }
 
-export function useToastContext(): UseToastReturn {
-    const context = useContext(ToastContext);
-    if (!context) {
-        throw new Error('useToastContext must be used within a ToastProvider');
-    }
-    return context;
-}
-
-// Trading-specific toast helpers
 export function useTradingToasts() {
-    const toast = useToastContext();
+    const toast = useContext(ToastContext);
+    
+    if (!toast) {
+        throw new Error('useTradingToasts must be used within a ToastProvider');
+    }
 
     const orderCreated = useCallback((orderType: 'buy' | 'sell', amount: number) => {
         const action = orderType === 'buy' ? 'compra' : 'venta';
@@ -234,7 +263,16 @@ export function useTradingToasts() {
     };
 }
 
-// Hook for handling API errors with toasts
+// Hook para utilizar el contexto
+export function useToastContext(): UseToastReturn {
+    const context = useContext(ToastContext);
+    if (!context) {
+        throw new Error('useToastContext must be used within a ToastProvider');
+    }
+    return context;
+}
+
+// Hook para manejar errores de API con toasts
 export function useApiErrorToast() {
     const toast = useToastContext();
 
@@ -254,18 +292,3 @@ export function useApiErrorToast() {
 }
 
 export default useToast;
-
-// src/hooks/useToast.ts
-import { useContext } from 'react';
-import { ToastContext } from '@/components/providers/toast-provider';
-
-export const useToast = () => {
-    const context = useContext(ToastContext);
-
-    if (context === undefined) {
-        throw new Error('useToast must be used within a ToastProvider');
-    }
-
-    return context;
-};
-

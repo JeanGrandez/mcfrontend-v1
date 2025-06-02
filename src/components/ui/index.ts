@@ -7,5 +7,8 @@ export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 export { Badge } from './badge';
 export { Spinner } from './spinner';
 export { Toast } from './toast';
-export { Drawer } from './drawer';
 export type { ToastProps } from './toast';
+export { Drawer } from './drawer';
+export { Select } from './select';
+export { Dialog, DialogHeader, DialogTitle, DialogContent, DialogFooter } from './dialog';
+export { Form, FormField, FormLabel, FormMessage } from './form';

@@ -1,4 +1,3 @@
-// src/components/ui/toast.tsx
 import React, { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 
@@ -12,13 +11,13 @@ export interface ToastProps {
 }
 
 export const Toast: React.FC<ToastProps> = ({
-                                                id,
-                                                type,
-                                                title,
-                                                message,
-                                                duration = 5000,
-                                                onClose,
-                                            }) => {
+    id,
+    type,
+    title,
+    message,
+    duration = 5000,
+    onClose,
+}) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {

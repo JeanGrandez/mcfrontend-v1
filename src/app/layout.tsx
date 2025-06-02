@@ -1,8 +1,9 @@
-// src/app/layout.tsx (ACTUALIZACIÓN)
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider, SocketProvider, ToastProvider, ConnectionStatus } from '@/components/providers';
+import { ToastProvider, AuthProvider, SocketProvider, ConnectionStatus } from '@/components/providers';
+import { ToastContextProvider } from '@/components/providers/toast-context';
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -46,14 +47,16 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
         >
-        <ToastProvider>
-            <AuthProvider>
-                <SocketProvider>
-                    {children}
-                    <ConnectionStatus />
-                </SocketProvider>
-            </AuthProvider>
-        </ToastProvider>
+            <ToastProvider>
+                <ToastContextProvider>
+                    <AuthProvider>
+                        <SocketProvider>
+                            {children}
+                            <ConnectionStatus />
+                        </SocketProvider>
+                    </AuthProvider>
+                </ToastContextProvider>
+            </ToastProvider>
         </body>
         </html>
     );

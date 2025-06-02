@@ -1,0 +1,47 @@
+/* src/styles/globals.css - ARCHIVO COMPLETADO */
+@import "tailwindcss";
+
+/* Base styles - Se importan desde app/globals.css */
+@import "../app/globals.css";
+
+/* Componentes específicos */
+@import "./components.css";
+@import "./admin.css";
+
+/* Utilities adicionales para casos específicos */
+.text-balance {
+  text-wrap: balance;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Custom scrollbar para contenedores específicos */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    print-color-adjust: exact;
+  }
+}

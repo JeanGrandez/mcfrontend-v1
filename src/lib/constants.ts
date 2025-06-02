@@ -1,5 +1,4 @@
-
-// src/lib/constants.ts - Constantes del sistema (Programador A)
+// src/lib/constants.ts - ARCHIVO CORREGIDO (sin duplicaciones)
 
 // API Configuration
 export const API_CONFIG = {
@@ -7,6 +6,16 @@ export const API_CONFIG = {
     WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000',
     TIMEOUT: 10000,
     RETRY_ATTEMPTS: 3,
+} as const;
+
+// App Configuration
+export const APP_CONFIG = {
+    NAME: process.env.NEXT_PUBLIC_APP_NAME || 'Trading Simulator',
+    VERSION: '1.0.0',
+    DESCRIPTION: 'Simulador de trading para evento fintech',
+    API_VERSION: 'v1',
+    REFRESH_INTERVAL: 5000, // 5 seconds
+    TOAST_DURATION: 3000, // 3 seconds
 } as const;
 
 // Trading Constants
@@ -21,16 +30,7 @@ export const TRADING = {
     INITIAL_PEN_BALANCE: 3500,
 } as const;
 
-// Order Types
-
-// src/lib/constants.ts
-export const APP_CONFIG = {
-    NAME: 'Trading Simulator',
-    VERSION: '1.0.0',
-    DESCRIPTION: 'Simulador de trading para evento fintech',
-    API_VERSION: 'v1',
-} as const;
-
+// Currencies
 export const CURRENCIES = {
     USD: {
         code: 'USD',
@@ -46,12 +46,7 @@ export const CURRENCIES = {
     },
 } as const;
 
-export const MARKET_STATUS = {
-    OPEN: 'open',
-    CLOSED: 'closed',
-} as const;
-
-
+// Order Types
 export const ORDER_TYPES = {
     BUY: 'buy',
     SELL: 'sell',
@@ -63,13 +58,12 @@ export const ORDER_STATUS = {
     CANCELLED: 'cancelled',
 } as const;
 
-
+// User Roles
 export const USER_ROLES = {
     USER: 'user',
     TRADER: 'trader',
     ADMIN: 'admin',
 } as const;
-
 
 // Market Status
 export const MARKET_STATUS = {
@@ -133,14 +127,7 @@ export const SUCCESS_MESSAGES = {
     LOGOUT_SUCCESS: 'Sesión cerrada',
 } as const;
 
-// App Configuration
-export const APP_CONFIG = {
-    NAME: process.env.NEXT_PUBLIC_APP_NAME || 'Trading Simulator',
-    VERSION: '1.0.0',
-    REFRESH_INTERVAL: 5000, // 5 seconds
-    TOAST_DURATION: 3000, // 3 seconds
-}
-
+// Toast Types
 export const TOAST_TYPES = {
     SUCCESS: 'success',
     ERROR: 'error',
@@ -148,6 +135,7 @@ export const TOAST_TYPES = {
     WARNING: 'warning',
 } as const;
 
+// API Endpoints
 export const API_ENDPOINTS = {
     AUTH: {
         REGISTER: '/api/auth/register',
@@ -170,31 +158,11 @@ export const API_ENDPOINTS = {
         STATS: '/api/admin/stats',
         EXPORT: '/api/admin/export',
         EXCHANGE_RATES: '/api/admin/exchange-rates',
+        USERS: '/api/admin/users',
     },
 } as const;
 
-export const VALIDATION_RULES = {
-    USER: {
-        NAME_MIN_LENGTH: 2,
-        NAME_MAX_LENGTH: 100,
-        DNI_LENGTH: 8,
-        PHONE_LENGTH: 9,
-    },
-    ORDER: {
-        MIN_USD_AMOUNT: 0.01,
-        MAX_USD_AMOUNT: 1000000,
-        MIN_EXCHANGE_RATE: 0.001,
-        MAX_EXCHANGE_RATE: 20,
-        MAX_ACTIVE_ORDERS: 5,
-    },
-    TRADING: {
-        INITIAL_USD_BALANCE: 1000,
-        INITIAL_PEN_BALANCE: 3500,
-        BASE_COMMISSION_RATE: 0.005,
-        MIN_OPERATION_AMOUNT: 100,
-    },
-} as const;
-
+// UI Configuration
 export const UI_CONFIG = {
     TOAST: {
         DEFAULT_DURATION: 5000,
@@ -212,6 +180,7 @@ export const UI_CONFIG = {
     },
 } as const;
 
+// Routes
 export const ROUTES = {
     HOME: '/',
     LOGIN: '/login',
@@ -222,5 +191,4 @@ export const ROUTES = {
     ADMIN: '/admin',
     ADMIN_PANEL: '/admin/panel',
     ADMIN_USERS: '/admin/usuarios',
-
 } as const;
